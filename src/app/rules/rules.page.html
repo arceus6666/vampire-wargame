@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Rules</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>
+    Objective:
+  </h1>
+  <p>
+    The objective of the game is to anihilate all<br />
+    the pieces of the opponent.<br />
+  </p>
+  <h1>
+    Rules:
+  </h1>
+  <p>
+    During each turn, players determinate wich<br />
+    pieces can be moved using a spinning wheel.<br />
+    When they lose two pieces, they will be<br />
+    granted a second spin per turn. After losing<br />
+    another two, they will receive a third spin.<br />
+  </p>
+  <h2>
+    The pieces:
+  </h2>
+  <p>
+    All pieces can move to an empty square or<br />
+    attack an adjacent enemy piece during a<br />
+    turn. Apart from having different statistics,<br />
+    each piece has an extra power:<br /><br />
+    Lycanthropes can move two squares, instead<br />
+    of one.<br /><br />
+    Vampires can drain life from an adjacent<br />
+    piece, dealing less damage but healing<br />
+    themselves in exchange.<br /><br />
+    Necromancer can summon a Zombie<br />
+    anywhere in the board, and can attack at<br />
+    two squares of distance, ignoring armor<br />
+    value.<br />
+  </p>
+  <ion-button (click)="back()" color="danger"><ion-icon name="return-left" color="dark"></ion-icon></ion-button>
+</ion-content>
