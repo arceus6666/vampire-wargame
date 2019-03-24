@@ -46,6 +46,9 @@ export class GamePage implements OnInit {
       //primer click
       //console.log(p)
       if (e.player === this.turn) {
+        if(e instanceof Necromancer){
+          
+        }
         this.prevP = e;
         this.id = `${c}${r}`;
         document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
