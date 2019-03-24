@@ -1,59 +1,90 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>game</ion-title>
+    <ion-title>Vampire Wargame</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding id="cnt">
+
   <table>
     <tr>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
+      <td>
+        <span style="text-align:center;">
+          Player {{turn?'1':'2'}}'s turn</span>
+      </td>
     </tr>
     <tr>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-    </tr>
-    <tr>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-    </tr>
-    <tr>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-    </tr>
-    <tr>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-    </tr>
-    <tr>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
-      <td class="white"></td>
-      <td class="black"></td>
+      <td style="width:300px;" rowspan="4">
+        <table id="table">
+          <tr *ngFor="let row of drawBoard; let r = index">
+            <td id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
+              [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
+              <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <ion-img src="../assets/imgs/white_l.png"></ion-img>
+      </td>
+      <td>
+        {{this.prevP?'HP: ' + this.prevP.hp:''}}
+      </td>
     </tr>
   </table>
 
 </ion-content>
+
+<!--
+<tr>
+  <td class="black">
+    <ion-img src="../assets/imgs/black_l.png"></ion-img>
+  </td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+</tr>
+<tr>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+</tr>
+<tr>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+</tr>
+<tr>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+</tr>
+<tr>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+</tr>
+<tr>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+  <td class="white"></td>
+  <td class="black"></td>
+</tr>
+
+-->
