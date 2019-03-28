@@ -89,7 +89,9 @@ export class GamePage implements OnInit {
     } else if (this.click) {
       //segundo click
       if (e instanceof Piece) {
+        // cambiar pieza o batalla
         if (e.player === this.turn) {
+          //cambiar pieza
           this.prevP = e;
           //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
           document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
