@@ -24,11 +24,36 @@
           </tr>
         </table>
       </td>
-      <td>
-        <ion-img src="../assets/imgs/white_l.png"></ion-img>
+      <td style="width:50px; height:50px">
+        <div *ngIf="this.prevP">
+          <ion-img id="im" *ngIf="this.prevP.src" src="{{this.prevP.src}}"></ion-img>
+        </div>
       </td>
-      <td>
-        {{this.prevP?'HP: ' + this.prevP.hp:''}}
+      <td *ngIf="this.prevP" style="width:150px; height:25px">
+        <table>
+          <tr>
+            <td *ngFor="let s of getHpArray()" style="width:25px; height:25px">
+              <ion-img src="../assets/imgs/hp.png"></ion-img>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td *ngIf="this.prevP && getType() === 'n'">
+        <ion-list>
+          <ion-radio-group>
+            <ion-list-header>
+              <ion-label>What do you want to do?</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Move/Attack</ion-label>
+              <ion-radio value="true" (ionSelect)="setNecro(true)" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Summon Zombie</ion-label>
+              <ion-radio value="false" (ionSelect)="setNecro(false)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
       </td>
     </tr>
   </table>

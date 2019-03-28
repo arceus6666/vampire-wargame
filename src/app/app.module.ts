@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { ScreenService } from './services/screen.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpModule,
   ],
   providers: [
+    ScreenService,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

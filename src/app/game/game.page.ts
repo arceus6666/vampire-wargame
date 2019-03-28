@@ -5,6 +5,8 @@ import { Lycanthrope } from '../models/lycanthrope';
 import { Necromancer } from '../models/necromancer';
 import { Vampire } from '../models/vampire';
 import { Zombie } from '../models/zombie';
+import { ScreenService } from '../services/screen.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -20,13 +22,19 @@ export class GamePage implements OnInit {
   public prevP: Piece;
   public player1: number;
   public player2: number;
-  private id: string;
+  public necro: boolean;
+  public vamp: boolean;
+  private id: Array<number>;
 
-  constructor() {
+  constructor(
+    private _screen: ScreenService,
+    private _router: Router
+  ) {
     this.board = new Board();
     this.turn = true;
     this.click = false;
     this.prevP = null;
+    this.necro = true;
     this.player1 = 6;
     this.player2 = 6;
   }
@@ -40,18 +48,42 @@ export class GamePage implements OnInit {
     }
   }
 
-  action(e: Piece | Array<number>, c: string, r: string) {
-    let idd = this.id
+  getType() {
+    if (this.prevP instanceof Necromancer) return 'n';
+    else if (this.prevP instanceof Vampire) return 'v';
+    else if (this.prevP instanceof Lycanthrope) return 'w';
+    else if (this.prevP instanceof Zombie) return 'z';
+    return null;
+  }
+
+  setNecro(value: boolean) {
+    this.necro = value;
+  }
+
+  setVamp(value: boolean) {
+    this.vamp = value;
+  }
+
+  getHpArray() {
+    let a = [];
+    for (let i = 0; i < this.prevP.hp; i++) {
+      a.push('');
+    }
+    return a;
+  }
+
+  action(e: Piece | Array<number>, c: number, r: number) {
     if (e instanceof Piece && !this.click) {
       //primer click
       //console.log(p)
       if (e.player === this.turn) {
-        if(e instanceof Necromancer){
-          
-        }
+        if (e instanceof Necromancer) this.necro = true;
+        if (e instanceof Vampire) this.vamp = true;
         this.prevP = e;
-        this.id = `${c}${r}`;
-        document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
+        //this.id = `${c}${r}`;
+        this.id = [c, r];
+        //document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
+        document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
         this.click = true;
       }
     } else if (this.click) {
@@ -59,41 +91,59 @@ export class GamePage implements OnInit {
       if (e instanceof Piece) {
         if (e.player === this.turn) {
           this.prevP = e;
+          //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
+          document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
+          //this.id = `${c}${r}`;
+          this.id = [c, r];
+          //document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
+          document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
         } else {
           // batalla
-          if (this.prevP instanceof Lycanthrope) {
-
-          } else if (this.prevP instanceof Vampire) {
-            //can drain
-
-          } else if (this.prevP instanceof Necromancer) {
-            //can attack at 2; ignore def
-            let cd = Math.abs(this.prevP.col - e.col)
-            let rd = Math.abs(this.prevP.row - e.row)
-            console.log('batalla')
-            console.log('x', cd, this.prevP.col, e.col)
-            console.log('y', rd, this.prevP.row, e.row)
-            if (((rd + cd) < 5 && (rd + cd) % 2 === 0) || (cd + rd === 1)) {
-              let rhp = e.hp - this.prevP.atk
+          let cd = Math.abs(this.prevP.col - e[0]);
+          let rd = Math.abs(this.prevP.row - e[1]);
+          if (
+            this.prevP instanceof Lycanthrope ||
+            this.prevP instanceof Zombie ||
+            (this.prevP instanceof Vampire && this.vamp)
+          ) {
+            if (rd < 2 && cd < 2) {
+              let dmg = this.prevP.atk - e.def;
+              let rhp = e.hp - (dmg < 1 ? 1 : dmg);
               if (rhp <= 0) {
                 this.board.cells[e.col][e.row] = [e.col, e.row];
-                if (e.player) this.player1--;
-                else this.player2--
-                if (this.player1 === 0) {
-                  //acabar
-                } else if (this.player2 === 0) {
-                  //acabar
-                }
+                if (e.player) this.player2--;
+                else this.player1--;
               } else {
-                e.hp = rhp
+                e.hp = rhp;
               }
             }
-
-          } else if (this.prevP instanceof Zombie) {
-
+          } else if (this.prevP instanceof Vampire && !this.vamp) {
+            //drain hp
+            this.vamp = true;
+          } else if (this.prevP instanceof Necromancer) {
+            //can attack at 2; ignore def
+            //console.log('batalla')
+            //console.log('x', cd, this.prevP.col, e.col);
+            //console.log('y', rd, this.prevP.row, e.row);
+            if (((rd + cd) < 5 && (rd + cd) % 2 === 0) || (cd + rd === 1)) {
+              let rhp = e.hp - this.prevP.atk;
+              if (rhp <= 0) {
+                this.board.cells[e.col][e.row] = [e.col, e.row];
+                if (e.player) this.player2--;
+                else this.player1--;
+              } else {
+                e.hp = rhp;
+              }
+            }
           }
-
-
+          if (this.player1 <= 0) {
+            //llamar alert
+            this._screen.showAlert('Jugador 2 Gana');
+            this._router.navigate(['home']);
+          } else if (this.player2 <= 0) {
+            this._screen.showAlert('Jugador 2 Gana');
+            this._router.navigate(['home']);
+          }
           this.turn = !this.turn;
         }
       } else {
@@ -102,39 +152,49 @@ export class GamePage implements OnInit {
         //e[0] = col, e[1] = row
         if (this.prevP instanceof Lycanthrope) {
           //can move at 2
-          let cd = Math.abs(this.prevP.col - e[0])
-          let rd = Math.abs(this.prevP.row - e[1])
+          let cd = Math.abs(this.prevP.col - e[0]);
+          let rd = Math.abs(this.prevP.row - e[1]);
           //console.log('x', cd, this.prevP.col, e[0])
           //console.log('y', rd, this.prevP.row, e[1])
           if (((rd + cd) < 5 && (rd + cd) % 2 === 0) || (cd + rd === 1)) {
             this.board.cells[this.prevP.col][this.prevP.row] = [this.prevP.col, this.prevP.row];
-            this.prevP.col = e[0]
-            this.prevP.row = e[1]
+            this.prevP.col = e[0];
+            this.prevP.row = e[1];
             this.board.cells[e[0]][e[1]] = this.prevP;
-            document.getElementById(idd).style.backgroundColor = (parseInt(idd[0]) + parseInt(idd[1])) % 2 === 0 ? 'black' : 'white';
+            //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
+            document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
             this.click = false;
             this.turn = !this.turn;
           }
-        } else if (this.prevP instanceof Vampire || this.prevP instanceof Zombie || this.prevP instanceof Necromancer) {
-          let cd = Math.abs(this.prevP.col - e[0])
-          let rd = Math.abs(this.prevP.row - e[1])
+        } else if (
+          this.prevP instanceof Zombie ||
+          this.prevP instanceof Vampire ||
+          (this.prevP instanceof Necromancer && this.necro)
+        ) {
+          let cd = Math.abs(this.prevP.col - e[0]);
+          let rd = Math.abs(this.prevP.row - e[1]);
           if (rd < 2 && cd < 2) {
             this.board.cells[this.prevP.col][this.prevP.row] = [this.prevP.col, this.prevP.row];
-            this.prevP.col = e[0]
-            this.prevP.row = e[1]
+            this.prevP.col = e[0];
+            this.prevP.row = e[1];
             this.board.cells[e[0]][e[1]] = this.prevP;
-            document.getElementById(idd).style.backgroundColor = (parseInt(idd[0]) + parseInt(idd[1])) % 2 === 0 ? 'black' : 'white';
+            //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
+            document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
             this.click = false;
             this.turn = !this.turn;
           }
+        } else if (this.prevP instanceof Necromancer && !this.necro) {
+          console.log('invocar')
+          if (!(this.board.cells[e[0]][e[1]] instanceof Piece)) {
+            this.board.cells[e[0]][e[1]] = new Zombie(e[0], e[1], this.turn);
+            document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
+            this.click = false;
+            this.turn = !this.turn;
+          } else {
+            this._screen.showAlert('Press an empty cell!');
+          }
         }
-        //console.log(this.board.cells)
-
       }
-
-
-
     }
   }
-
 }

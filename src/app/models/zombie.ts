@@ -7,7 +7,7 @@ export class Zombie extends Piece {
     this.hp = 1;
     this.atk = 1;
     this.def = 0;
-    this.src = `../assets/imgs/${p ? 'red' : 'black'}_l.png`
+    this.src = `../assets/imgs/${p ? 'red' : 'black'}_z.png`;
   }
 
   public attack(objective: Piece): number {
