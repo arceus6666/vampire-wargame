@@ -72,6 +72,18 @@ export class GamePage implements OnInit {
     return a;
   }
 
+  getPType(p: Piece): string {
+    return p instanceof Lycanthrope ? 'l' : p instanceof Zombie ? 'z' : p instanceof Necromancer ? 'n' : 'v';
+  }
+
+  resetBG(cc, rr) {
+    document.getElementById(`${cc}${rr}`).style.backgroundColor = (cc + rr) % 2 === 0 ? 'black' : 'white';
+  }
+
+  setBG(cc, rr) {
+    document.getElementById(`${cc}${rr}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
+  }
+
   action(e: Piece | Array<number>, c: number, r: number) {
     if (e instanceof Piece && !this.click) {
       //primer click
@@ -83,7 +95,8 @@ export class GamePage implements OnInit {
         //this.id = `${c}${r}`;
         this.id = [c, r];
         //document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
-        document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
+        //document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
+        this.setBG(this.id[0], this.id[1]);
         this.click = true;
       }
     } else if (this.click) {
@@ -94,34 +107,61 @@ export class GamePage implements OnInit {
           //cambiar pieza
           this.prevP = e;
           //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
-          document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
+          //document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
+          this.resetBG(this.id[0], this.id[1]);
           //this.id = `${c}${r}`;
           this.id = [c, r];
           //document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
-          document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
+          //document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
+          this.setBG(this.id[0], this.id[1])
         } else {
           // batalla
-          let cd = Math.abs(this.prevP.col - e[0]);
-          let rd = Math.abs(this.prevP.row - e[1]);
+          let cd = Math.abs(this.prevP.col - e.col);
+          let rd = Math.abs(this.prevP.row - e.row);
           if (
             this.prevP instanceof Lycanthrope ||
             this.prevP instanceof Zombie ||
             (this.prevP instanceof Vampire && this.vamp)
           ) {
+            /*
+            let pt = this.getPType(this.prevP)
+            let et = this.getPType(e)
+            console.log(`${pt} vs ${et}`)
+            //*/
             if (rd < 2 && cd < 2) {
               let dmg = this.prevP.atk - e.def;
               let rhp = e.hp - (dmg < 1 ? 1 : dmg);
               if (rhp <= 0) {
+                //console.log(`${et} muerto`)
                 this.board.cells[e.col][e.row] = [e.col, e.row];
                 if (e.player) this.player2--;
                 else this.player1--;
               } else {
                 e.hp = rhp;
+                //console.log(`${et} con: ${rhp} restante`)
               }
+              this.resetBG(this.prevP.col, this.prevP.row);
             }
           } else if (this.prevP instanceof Vampire && !this.vamp) {
             //drain hp
-            this.vamp = true;
+            if (rd < 2 && cd < 2) {
+              let dmg = this.prevP.atk - e.def;
+              let rhp = e.hp - (dmg < 1 ? 1 : dmg);
+              let rrhp = rhp / 2 < 2 ? 1 : rhp / 2;
+              if (rrhp <= 0) {
+                //console.log(`${et} muerto`)
+                this.board.cells[e.col][e.row] = [e.col, e.row];
+                if (e.player) this.player2--;
+                else this.player1--;
+              } else {
+                e.hp = rrhp;
+                //console.log(`${et} con: ${rhp} restante`)
+              }
+              this.prevP.hp = this.prevP.hp + rrhp > 5 ? 5 : this.prevP.hp + rrhp;
+              this.board.cells[this.prevP.col][this.prevP.row] = this.prevP;
+              this.vamp = true;
+              this.resetBG(this.prevP.col, this.prevP.row);
+            }
           } else if (this.prevP instanceof Necromancer) {
             //can attack at 2; ignore def
             //console.log('batalla')
@@ -136,6 +176,7 @@ export class GamePage implements OnInit {
               } else {
                 e.hp = rhp;
               }
+              this.resetBG(this.prevP.col, this.prevP.row);
             }
           }
           if (this.player1 <= 0) {

@@ -1,17 +1,17 @@
 <ion-app>
-  <ion-split-pane>
+  <ion-split-pane style="--border: 0px;">
     <ion-menu>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="dark">
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+        <ion-list style="padding-top: 0px; background: url('../assets/imgs/bg1.jpg');">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" color="dark">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" style="--background: transparent; --background-size: cover">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
+              <ion-label style="font-size: 30px;">
                 {{p.title}}
               </ion-label>
             </ion-item>
