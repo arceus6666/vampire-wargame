@@ -7,13 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  public isApp;
   constructor(public _router: Router) {
-
+    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
   }
-  goRules(){
+  goRules() {
     this._router.navigate(['rules'])
   }
-  goGame(){
+  goGame() {
     this._router.navigate(['game'])
+  }
+  closeApp() {
+    navigator['app'].exitApp()
   }
 }

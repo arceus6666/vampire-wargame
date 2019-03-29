@@ -1,0 +1,55 @@
+.bg-image {
+  background-image: url("../../assets/imgs/bg1.jpg");
+  background-repeat: repeat-y;
+  background-size: cover;
+}
+
+.bg-image-t {
+  background-image: url("../../assets/imgs/bg1.jpg");
+  background-repeat: repeat-y;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.tb {
+  --padding-top: 0px !important;
+  --padding-bottom: 0px !important;
+  --padding-right: 0px !important;
+  --padding-left: 0px !important;
+  --padding-start: 0px !important;
+  --padding-end: 0px !important;
+  --border-width: 0;
+}
+
+.btn {
+  --color: black;
+  height: 70px;
+  text-transform: none;
+}
+
+.btn:hover {
+  --color: red;
+  height: 70px;
+  text-transform: none;
+}
+
+.txt {
+  font-size: 35px;
+  padding-top: 10px;
+}
+
+span{
+  font-size:40px;
+}
+
+h1, h2 {
+  font-size: 50px;
+  padding: 2;
+}
+
+.tl {
+  font-size: 40px;
+  text-align: center;
+  color: black;
+}

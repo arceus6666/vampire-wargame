@@ -106,13 +106,8 @@ export class GamePage implements OnInit {
         if (e.player === this.turn) {
           //cambiar pieza
           this.prevP = e;
-          //document.getElementById(this.id).style.backgroundColor = (parseInt(this.id[0]) + parseInt(this.id[1])) % 2 === 0 ? 'black' : 'white';
-          //document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
           this.resetBG(this.id[0], this.id[1]);
-          //this.id = `${c}${r}`;
           this.id = [c, r];
-          //document.getElementById(this.id).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)'
-          //document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = this.turn ? 'rgba(100, 0, 0,0.3)' : 'rgba(0,0,0,0.3)';
           this.setBG(this.id[0], this.id[1])
         } else {
           // batalla
@@ -227,11 +222,13 @@ export class GamePage implements OnInit {
             this.turn = !this.turn;
           }
         } else if (this.prevP instanceof Necromancer && !this.necro) {
-          console.log('invocar')
+          //console.log('invocar')
           if (!(this.board.cells[e[0]][e[1]] instanceof Piece)) {
             this.board.cells[e[0]][e[1]] = new Zombie(e[0], e[1], this.turn);
             document.getElementById(`${this.id[0]}${this.id[1]}`).style.backgroundColor = (this.id[0] + this.id[1]) % 2 === 0 ? 'black' : 'white';
             this.click = false;
+            if (this.turn) this.player1++;
+            else this.player2++;
             this.turn = !this.turn;
           } else {
             this._screen.showAlert('Press an empty cell!');

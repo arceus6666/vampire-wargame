@@ -83,25 +83,20 @@
   --padding-bottom: 0px;
 }
 
-ion-toolbar .tb {
+ion-toolbar {
   --padding-top: 0px !important;
   --padding-start: 0px !important;
   --padding-right: 0px !important;
   --padding-end: 0px !important;
-  --border-width: 0;
-}
-
-page-home {
-  .bg-image {
-    background-image: url("../assets/imgs/bg1.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    --background: url("../assets/imgs/bg1.jpg");
-  }
+  --border-width: 0 !important;
 }
 
 ion-content {
+  background-image: url("../assets/imgs/bg1.jpg");
+}
+
+ion-buttons.sc-ion-buttons-md-h{
+  height: 77px;
   background-image: url("../assets/imgs/bg1.jpg");
 }
 
