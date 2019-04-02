@@ -5,23 +5,22 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title class="bg-image-t tl">
-        Rules
+          Vampire Wargame
       </ion-title>
     </ion-toolbar>
   </div>
 </ion-header>
 
-<ion-content>
-  <div class="bg-image" style="padding-left:10%; padding-top: 5%;padding-bottom: 5%;">
-    <div class="txt">
+<ion-content no-bounce>
+  <div>
+    <div class="txt bg-image">
       <h1>
         Rules:
       </h1>
       <h2>
         Objective:
       </h2>
-      The objective of the game is to anihilate all<br />
-      the pieces of the opponent.<br />
+      The objective of the game is to anihilate all the pieces of the opponent.<br />
       <!--
       During each turn, players determinate wich<br />
       pieces can be moved using a spinning wheel.<br />
@@ -32,19 +31,11 @@
       <h2>
         The pieces:
       </h2>
-      All pieces can move to an empty square or<br />
-      attack an adjacent enemy piece during a<br />
-      turn. Apart from having different statistics,<br />
-      each piece has an extra power:<br />
-      <span>Lycanthropes</span> can move two squares, instead<br />
-      of one.<br />
-      <span>Vampires</span> can drain life from an adjacent<br />
-      piece, dealing less damage but healing<br />
-      themselves in exchange.<br />
-      <span>Necromancer</span> can summon a Zombie<br />
-      anywhere in the board, and can attack at<br />
-      two squares of distance, ignoring armor<br />
-      value.<br />
+      All pieces can move to an empty square or attack an adjacent enemy piece during a turn. Apart from having different statistics, each piece has an extra power:<br />
+      <span>Lycanthropes</span> can move two squares, instead of one.<br />
+      <span>Vampires</span> can drain life from an adjacent 
+      piece, dealing less damage but healing themselves in exchange.<br />
+      <span>Necromancer</span> can summon a <span>Zombie</span> anywhere in the board, and can attack at two squares of distance, ignoring armor value.<br />
       <ion-button fill="clear" (click)="back()" class="btn">
         <ion-img src="../../assets/imgs/return.png"></ion-img>
       </ion-button>

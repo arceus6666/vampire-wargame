@@ -9,12 +9,19 @@ export class ScreenService {
 
   constructor(private _alertCtrl: AlertController) { }
 
-  public async showAlert(title: string, buttons: Array<AlertBtn | string> = ['Ok'], subtitle?: string, message?: string) {
+  public async showAlert(
+    title: string,
+    buttons: Array<AlertBtn | string> = ['Ok'],
+    subtitle?: string,
+    message?: string,
+    cssClass?: string | Array<string>
+  ) {
     const alert = await this._alertCtrl.create({
       header: title,
       subHeader: subtitle,
       message: message,
-      buttons: buttons
+      buttons: buttons,
+      cssClass: cssClass
     });
     await alert.present()
   }

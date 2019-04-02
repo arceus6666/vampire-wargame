@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { PagesService } from '../services/pages.service';
+
 @Component({
   selector: 'app-rules',
   templateUrl: './rules.page.html',
@@ -9,14 +11,15 @@ import { Router } from '@angular/router';
 export class RulesPage implements OnInit {
 
   constructor(
-    private _router: Router
+    private _router: Router,
+    private _pager: PagesService
   ) { }
 
   ngOnInit() {
   }
 
   back() {
-    this._router.navigate(['home'])
+    this._router.navigate([this._pager.lastPage]);
   }
 
 }

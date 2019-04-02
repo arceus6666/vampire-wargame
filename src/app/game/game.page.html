@@ -1,132 +1,124 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Vampire Wargame</ion-title>
+  <ion-toolbar class="tb">
+    <ion-title class="bg-image-tl tl">
+      Vampire Wargame
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding id="cnt">
-
-  <table>
-    <tr>
-      <td>
-        <span style="text-align:center;">
-          Player {{turn?'1':'2'}}'s turn</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:300px;" rowspan="4">
-        <table id="table">
-          <tr *ngFor="let row of drawBoard; let r = index">
-            <td id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
-              [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
-              <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td style="width:50px; height:50px">
-        <div *ngIf="this.prevP">
-          <ion-img id="im" *ngIf="this.prevP.src" src="{{this.prevP.src}}"></ion-img>
-        </div>
-      </td>
-      <td *ngIf="this.prevP" style="width:150px; height:25px">
-        <table>
+<ion-content no-bounce>
+  <div>
+    <div class="bg-image" style="text-align: center; padding-top: 5%;">
+      <div style="display: inline-block; width:300px !important;">
+        <!--board and turn-->
+        <table style="width:300px">
+          <!--turn-->
           <tr>
-            <td *ngFor="let s of getHpArray()" style="width:25px; height:25px">
-              <ion-img src="../assets/imgs/hp.png"></ion-img>
+            <td>
+              <ion-text class="txt">
+                Player {{turn?'1':'2'}}'s turn
+              </ion-text>
+            </td>
+          </tr>
+          <!--draw board-->
+          <tr>
+            <td style="width:300px;">
+              <table id="table">
+                <tr *ngFor="let row of drawBoard; let r = index">
+                  <td class="btd" id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
+                    [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
+                    <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table><br />
+        <!--portrait, life and questions-->
+        <table *ngIf="this.prevP">
+          <!--portrait and life-->
+          <tr>
+            <!--selected image-->
+            <td class="portrait">
+              <ion-img id="im" class="portrait" *ngIf="this.prevP.src" src="{{this.prevP.src}}"></ion-img>
+            </td>
+            <!--selected hp-->
+            <td class="hp-bar">
+              <table class="hp-bar">
+                <tr class="hp-bar">
+                  <td class="hp" *ngFor="let s of getHpArray()" style="width:25px; height:25px">
+                    <ion-img src="../assets/imgs/hp.png"></ion-img>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!--for necro and vamp-->
+          <tr *ngIf="getPType(this.prevP) === 'n' || getPType(this.prevP) === 'v'">
+            <td class="question" colspan="6">
+              <ion-text class="txt">
+                What do you want to do?
+              </ion-text>
+            </td>
+          </tr>
+          <!--necro-->
+          <tr *ngIf="getPType(this.prevP) === 'n'">
+            <td class="option" colspan="3">
+              <ion-button id="n1" fill="clear"
+                [ngClass]="{'option-selected': this.necro, 'option-not-selected': !this.necro}"
+                (click)="setNecro(true)">
+                Move / Normal Attack
+              </ion-button>
+            </td>
+            <td class="option" colspan="3">
+              <ion-button id="n2" fill="clear"
+                [ngClass]="{'option-selected': !this.necro, 'option-not-selected': this.necro}"
+                (click)="setNecro(false)">
+                Summon Zombie
+              </ion-button>
+            </td>
+          </tr>
+          <!--vamp-->
+          <tr *ngIf="getPType(this.prevP) === 'v'">
+            <td class="option" colspan="3">
+              <ion-button id="v1" fill="clear"
+                [ngClass]="{'option-selected': this.vamp, 'option-not-selected': !this.vamp}" (click)="setVamp(true)">
+                Move / Normal Attack
+              </ion-button>
+            </td>
+            <td class="option" colspan="3">
+              <ion-button id="v2" fill="clear"
+                [ngClass]="{'option-selected': !this.vamp, 'option-not-selected': this.vamp}" (click)="setVamp(false)">
+                Drain Life
+              </ion-button>
+            </td>
+          </tr>
+          <!--for lyc and zombie-->
+          <tr *ngIf="getPType(this.prevP) === 'l' || getPType(this.prevP) === 'z'">
+            <td class="question">
+            </td>
+          </tr>
+          <tr *ngIf="getPType(this.prevP) === 'l' || getPType(this.prevP) === 'z'">
+            <td class="option" colspan="3"></td>
+            <td class="option" colspan="3"></td>
+          </tr>
+        </table><br />
+        <!--rules and exit-->
+        <table style="width:300px">
+          <tr>
+            <td>
+              <ion-button fill="clear" (click)="goRules()" class="btn">
+                <ion-text class="txt">Rules</ion-text>
+              </ion-button>
+            </td>
+            <td>
+              <ion-button fill="clear" (click)="home()" class="btn">
+                <ion-text class="txt">Exit</ion-text>
+              </ion-button>
             </td>
           </tr>
         </table>
-      </td>
-      <td *ngIf="this.prevP && getPType(this.prevP) === 'n'">
-        <ion-list>
-          <ion-radio-group>
-            <ion-list-header>
-              <ion-label>What do you want to do?</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>Move/Attack</ion-label>
-              <ion-radio value="true" (ionSelect)="setNecro(true)" checked></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Summon Zombie</ion-label>
-              <ion-radio value="false" (ionSelect)="setNecro(false)"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
-      </td>
-      <td *ngIf="this.prevP && getPType(this.prevP) === 'v'">
-        <ion-list>
-          <ion-radio-group>
-            <ion-list-header>
-              <ion-label>What do you want to do?</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>Normal Attack</ion-label>
-              <ion-radio value="true" (ionSelect)="setVamp(true)" checked></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Drain Life</ion-label>
-              <ion-radio value="false" (ionSelect)="setVamp(false)"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
-      </td>
-    </tr>
-  </table>
-
+      </div>
+    </div>
+  </div>
 </ion-content>
-
-<!--
-<tr>
-  <td class="black">
-    <ion-img src="../assets/imgs/black_l.png"></ion-img>
-  </td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-</tr>
-<tr>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-</tr>
-<tr>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-</tr>
-<tr>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-</tr>
-<tr>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-</tr>
-<tr>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-  <td class="white"></td>
-  <td class="black"></td>
-</tr>
-
--->

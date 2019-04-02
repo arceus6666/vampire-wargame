@@ -1,7 +1,10 @@
 .bg-image {
   background-image: url("../../assets/imgs/bg1.jpg");
   background-repeat: repeat-y;
-  background-size: cover;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .bg-image-t {
@@ -36,7 +39,10 @@
 
 .txt {
   font-size: 35px;
-  padding-top: 10px;
+  padding-top: 7%;
+  padding-bottom: 7%;
+  padding-left: 7%;
+  padding-right: 7%;
 }
 
 span{
@@ -52,4 +58,9 @@ h1, h2 {
   font-size: 40px;
   text-align: center;
   color: black;
+  padding-top: 10px;
+}
+
+ion-content {
+  background-color: transparent !important;
 }
