@@ -62,8 +62,9 @@ export class GamePage implements OnInit {
 
   getHpArray() {
     let a = [];
-    for (let i = 0; i < this.prevP.hp; i++) {
-      a.push('');
+    let h = this.prevP.hp;
+    for (let i = 0; i < 5; i++) {
+      a.push(i < h);
     }
     return a;
   }
@@ -118,6 +119,7 @@ export class GamePage implements OnInit {
             this.bg(c, r, true);
           } else {
             // batalla
+            if (!this.prevP) return
             let cd = Math.abs(this.prevP.col - e.col);
             let rd = Math.abs(this.prevP.row - e.row);
             if (

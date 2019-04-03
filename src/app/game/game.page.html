@@ -8,10 +8,10 @@
 
 <ion-content no-bounce>
   <div>
-    <div class="bg-image" style="text-align: center; padding-top: 5%;">
+    <div class="bg-image" style="padding-top: 5%;">
       <div style="display: inline-block; width:300px !important;">
         <!--board and turn-->
-        <table style="width:300px">
+        <table id="bt">
           <!--turn-->
           <tr>
             <td>
@@ -34,84 +34,65 @@
             </td>
           </tr>
         </table><br />
-        <!--portrait, life and questions-->
-        <table *ngIf="this.prevP">
-          <!--portrait and life-->
+        <!--portrait and life-->
+        <table id="pl" *ngIf="this.prevP">
           <tr>
             <!--selected image-->
             <td class="portrait">
               <ion-img id="im" class="portrait" *ngIf="this.prevP.src" src="{{this.prevP.src}}"></ion-img>
             </td>
             <!--selected hp-->
-            <td class="hp-bar">
-              <table class="hp-bar">
-                <tr class="hp-bar">
-                  <td class="hp" *ngFor="let s of getHpArray()" style="width:25px; height:25px">
-                    <ion-img src="../assets/imgs/hp.png"></ion-img>
-                  </td>
-                </tr>
-              </table>
+            <td class="hp" *ngFor="let s of getHpArray()">
+              <ion-img *ngIf="s" src="../assets/imgs/hp.png"></ion-img>
+              <ion-img *ngIf="!s" src="../assets/imgs/hpe.png"></ion-img>
             </td>
-          </tr>
-          <!--for necro and vamp-->
-          <tr *ngIf="getPType(this.prevP) === 'n' || getPType(this.prevP) === 'v'">
-            <td class="question" colspan="6">
-              <ion-text class="txt">
-                What do you want to do?
-              </ion-text>
-            </td>
-          </tr>
-          <!--necro-->
-          <tr *ngIf="getPType(this.prevP) === 'n'">
-            <td class="option" colspan="3">
-              <ion-button id="n1" fill="clear"
-                [ngClass]="{'option-selected': this.necro, 'option-not-selected': !this.necro}"
-                (click)="setNecro(true)">
-                Move / Normal Attack
-              </ion-button>
-            </td>
-            <td class="option" colspan="3">
-              <ion-button id="n2" fill="clear"
-                [ngClass]="{'option-selected': !this.necro, 'option-not-selected': this.necro}"
-                (click)="setNecro(false)">
-                Summon Zombie
-              </ion-button>
-            </td>
-          </tr>
-          <!--vamp-->
-          <tr *ngIf="getPType(this.prevP) === 'v'">
-            <td class="option" colspan="3">
-              <ion-button id="v1" fill="clear"
-                [ngClass]="{'option-selected': this.vamp, 'option-not-selected': !this.vamp}" (click)="setVamp(true)">
-                Move / Normal Attack
-              </ion-button>
-            </td>
-            <td class="option" colspan="3">
-              <ion-button id="v2" fill="clear"
-                [ngClass]="{'option-selected': !this.vamp, 'option-not-selected': this.vamp}" (click)="setVamp(false)">
-                Drain Life
-              </ion-button>
-            </td>
-          </tr>
-          <!--for lyc and zombie-->
-          <tr *ngIf="getPType(this.prevP) === 'l' || getPType(this.prevP) === 'z'">
-            <td class="question">
-            </td>
-          </tr>
-          <tr *ngIf="getPType(this.prevP) === 'l' || getPType(this.prevP) === 'z'">
-            <td class="option" colspan="3"></td>
-            <td class="option" colspan="3"></td>
           </tr>
         </table><br />
+        <!--question necro and vamp-->
+        <div *ngIf="this.prevP" id="q">
+          <ion-text *ngIf="getPType(this.prevP) === 'n' || getPType(this.prevP) === 'v'" class="txt-q">
+            What do you want to do?
+          </ion-text><br />
+          <!--necro-->
+          <div *ngIf="getPType(this.prevP) === 'n'">
+            <ion-button fill="clear" [ngClass]="{'option-selected': this.necro, 'option-not-selected': !this.necro}"
+              (click)="setNecro(true)" style="text-align: center;">
+              <ion-text class="txt-o">
+                - Move/Attack
+              </ion-text>
+            </ion-button>
+            <ion-button fill="clear" [ngClass]="{'option-selected': !this.necro, 'option-not-selected': this.necro}"
+              (click)="setNecro(false)">
+              <ion-text class="txt-o">
+                - Summon Zombie
+              </ion-text>
+            </ion-button>
+          </div>
+          <!--vamp-->
+          <div *ngIf="getPType(this.prevP) === 'v'">
+            <ion-button fill="clear" [ngClass]="{'option-selected': this.vamp, 'option-not-selected': !this.vamp}"
+              (click)="setVamp(true)">
+              <ion-text class="txt-o">
+                - Move/Attack
+              </ion-text>
+            </ion-button>
+            <ion-button fill="clear" [ngClass]="{'option-selected': !this.vamp, 'option-not-selected': this.vamp}"
+              (click)="setVamp(false)">
+              <ion-text class="txt-o">
+                - Drain Life
+              </ion-text>
+            </ion-button>
+          </div>
+        </div>
         <!--rules and exit-->
-        <table style="width:300px">
-          <tr>
-            <td>
+        <table id="re">
+          <tr class="question">
+            <td class="option">
               <ion-button fill="clear" (click)="goRules()" class="btn">
                 <ion-text class="txt">Rules</ion-text>
               </ion-button>
             </td>
-            <td>
+            <td class="option">
               <ion-button fill="clear" (click)="home()" class="btn">
                 <ion-text class="txt">Exit</ion-text>
               </ion-button>
