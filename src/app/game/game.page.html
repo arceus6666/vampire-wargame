@@ -24,7 +24,7 @@
           <tr>
             <td style="width:300px;">
               <table id="table">
-                <tr *ngFor="let row of drawBoard; let r = index">
+                <tr *ngFor="let row of drawBoard; let r = index" class="row">
                   <td class="btd" id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
                     [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
                     <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>

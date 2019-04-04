@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PagesService } from '../services/pages.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +10,21 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
   public isApp;
-  constructor(public _router: Router) {
-    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  constructor(
+    public _router: Router,
+    public _pager: PagesService,
+    public _plt: Platform
+  ) {
+    this.isApp = _plt.is('android') || _plt.is('ios');
   }
   goRules() {
     this._router.navigate(['rules'])
   }
   goGame() {
     this._router.navigate(['game'])
+  }
+  print() {
+    console.log(this._plt)
   }
   closeApp() {
     navigator['app'].exitApp()
