@@ -61,10 +61,12 @@ button {
   background-image: url("../../assets/imgs/white-red.png");
 }
 
+/*
 table,
 td {
   border: 1px solid black;
 }
+*/
 
 .tl {
   font-size: 40px;
@@ -78,12 +80,14 @@ td {
 }
 
 .txt {
+  /*font-family: 'Times New Roman', Times, serif;*/
   font-size: 35px;
   padding-top: 10px;
   text-align: center;
 }
 
 .txt-q {
+  font-family: 'Times New Roman', Times, serif;
   font-size: 32px;
   color: black;
   padding-top: 10px;
@@ -91,6 +95,7 @@ td {
 }
 
 .txt-o {
+  font-family: 'Times New Roman', Times, serif;
   font-size: 30px;
   padding-top: 10px;
   text-align: center;

@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "upload": "git add . & git commit -m \"2\" & git push"
+    "upload": "git add . & git commit -m \"2\" & git push",
+    "download":"git pull"
   },
   "private": true,
   "dependencies": {

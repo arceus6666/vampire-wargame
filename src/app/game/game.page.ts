@@ -27,7 +27,16 @@ export class GamePage implements OnInit {
   public player2: number;
   public necro: boolean;
   public vamp: boolean;
+  public currentAv;
   private id: Array<number>;
+  private n1 = true;
+  private vn1;
+  private n2 = false;
+  private vn2;
+  private v1 = true;
+  private vv1;
+  private v2 = false;
+  private vv2;
 
   constructor(
     private _screen: ScreenService,
@@ -50,6 +59,65 @@ export class GamePage implements OnInit {
         this.drawBoard[i][j] = this.board.cells[j][i];
       }
     }
+  }
+
+  setTime(value) {
+    switch (value) {
+      case 0:
+
+      case 1:
+      case 2:
+      case 3:
+    }
+  }
+
+  on1() {
+    this.vn1 = 0
+    if (this.necro) {
+      if (this.n1) {
+        document.getElementById('n1').textContent = '  Move/Attack';
+      } else {
+        document.getElementById('n1').textContent = '> Move/Attack';
+      }
+      this.n1 = !this.n1;
+    }
+  }
+
+  on2() {
+    if (this.necro) {
+      if (this.n2) {
+        document.getElementById('n2').textContent = '  Summon Zombie';
+      } else {
+        document.getElementById('n2').textContent = '> Summon Zombie';
+      }
+      this.n2 = !this.n2;
+    }
+  }
+
+  ov1() {
+    if (this.vamp) {
+      if (this.v1) {
+        document.getElementById('v1').textContent = '  Move/Attack';
+      } else {
+        document.getElementById('v1').textContent = '> Move/Attack';
+      }
+      this.v1 = !this.v1;
+    }
+  }
+
+  ov2() {
+    if (this.vamp) {
+      if (this.v2) {
+        document.getElementById('v2').textContent = '  Drain Life';
+      } else {
+        document.getElementById('v2').textContent = '> Drain Life';
+      }
+      this.v2 = !this.v2;
+    }
+  }
+
+  stopAll() {
+
   }
 
   setNecro(value: boolean) {
@@ -92,18 +160,33 @@ export class GamePage implements OnInit {
     this._router.navigate(['home']);
   }
 
+  showAvailable() {
+    let type = this.getPType(this.prevP)
+    let c = this.prevP.col
+    let r = this.prevP.row
+    switch (type) {
+      case 'v':
+
+        break;
+      case 'n': break;
+      case 'v': break;
+      case 'z': break;
+    }
+  }
+
+
+
   action(e: Piece | Array<number>, c: number, r: number) {
-    if (e instanceof Piece && !this.click) {
+    if (e instanceof Piece && !this.click && e.player === this.turn) {
       //primer click
       //console.log(p)
-      if (e.player === this.turn) {
-        if (e instanceof Necromancer) this.necro = true;
-        if (e instanceof Vampire) this.vamp = true;
-        this.prevP = e;
-        this.id = [c, r];
-        this.bg(c, r, true);
-        this.click = true;
-      }
+      if (e instanceof Necromancer) this.necro = true;
+      if (e instanceof Vampire) this.vamp = true;
+      this.prevP = e;
+      this.id = [c, r];
+      this.bg(c, r, true);
+      this.click = true;
+
     } else if (this.click) {
       //segundo click
       if (e instanceof Piece) {

@@ -10,6 +10,7 @@ import { Platform } from '@ionic/angular';
 })
 export class HomePage {
   public isApp;
+  public extras = false;
   constructor(
     public _router: Router,
     public _pager: PagesService,

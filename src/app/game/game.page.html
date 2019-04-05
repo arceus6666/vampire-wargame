@@ -10,27 +10,18 @@
   <div>
     <div class="bg-image" style="padding-top: 5%;">
       <div style="display: inline-block; width:300px !important;">
-        <!--board and turn-->
-        <table id="bt">
-          <!--turn-->
-          <tr>
-            <td>
-              <ion-text class="txt">
-                Player {{turn?'1':'2'}}'s turn
-              </ion-text>
-            </td>
-          </tr>
-          <!--draw board-->
-          <tr>
-            <td style="width:300px;">
-              <table id="table">
-                <tr *ngFor="let row of drawBoard; let r = index" class="row">
-                  <td class="btd" id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
-                    [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
-                    <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>
-                  </td>
-                </tr>
-              </table>
+        <!--turn-->
+        <div style="text-align: center">
+          <ion-text class="txt">
+            Player {{turn?'1':'2'}}'s turn
+          </ion-text>
+        </div>
+        <!--draw board-->
+        <table id="table">
+          <tr *ngFor="let row of drawBoard; let r = index" class="row">
+            <td class="btd" id="{{c}}{{r}}" *ngFor="let col of row; let c = index"
+              [ngClass]="{'black':(r+c)%2===0,'white':(r+c)%2!==0}" (click)="action(board.cells[c][r], c, r)">
+              <ion-img *ngIf="board.cells[c][r].src" src="{{board.cells[c][r].src}}"></ion-img>
             </td>
           </tr>
         </table><br />
@@ -51,35 +42,35 @@
         <!--question necro and vamp-->
         <div *ngIf="this.prevP" id="q">
           <ion-text *ngIf="getPType(this.prevP) === 'n' || getPType(this.prevP) === 'v'" class="txt-q">
-            What do you want to do?
+            Action:
           </ion-text><br />
           <!--necro-->
           <div *ngIf="getPType(this.prevP) === 'n'">
             <ion-button fill="clear" [ngClass]="{'option-selected': this.necro, 'option-not-selected': !this.necro}"
-              (click)="setNecro(true)" style="text-align: center;">
-              <ion-text class="txt-o">
-                - Move/Attack
+              (click)="setNecro(true); setInterval(this.optionN1,700)" style="text-align: center;">
+              <ion-text id="n1" class="txt-o">
+                > Move/Attack
               </ion-text>
             </ion-button>
             <ion-button fill="clear" [ngClass]="{'option-selected': !this.necro, 'option-not-selected': this.necro}"
-              (click)="setNecro(false)">
-              <ion-text class="txt-o">
-                - Summon Zombie
+              (click)="setNecro(false); setInterval(this.optionN2,700)">
+              <ion-text id="n2" class="txt-o">
+                &nbsp;Summon Zombie
               </ion-text>
             </ion-button>
           </div>
           <!--vamp-->
           <div *ngIf="getPType(this.prevP) === 'v'">
             <ion-button fill="clear" [ngClass]="{'option-selected': this.vamp, 'option-not-selected': !this.vamp}"
-              (click)="setVamp(true)">
-              <ion-text class="txt-o">
-                - Move/Attack
+              (click)="setVamp(true); setInterval(this.optionV1,700)">
+              <ion-text id="v1" class="txt-o">
+                > Move/Attack
               </ion-text>
             </ion-button>
             <ion-button fill="clear" [ngClass]="{'option-selected': !this.vamp, 'option-not-selected': this.vamp}"
-              (click)="setVamp(false)">
-              <ion-text class="txt-o">
-                - Drain Life
+              (click)="setVamp(false); setInterval(this.optionV2,700)">
+              <ion-text id="v2" class="txt-o">
+                &nbsp;Drain Life
               </ion-text>
             </ion-button>
           </div>

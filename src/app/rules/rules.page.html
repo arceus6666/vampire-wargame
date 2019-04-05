@@ -5,7 +5,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title class="bg-image-t tl">
-          Vampire Wargame
+        Vampire Wargame
       </ion-title>
     </ion-toolbar>
   </div>
@@ -31,11 +31,92 @@
       <h2>
         The pieces:
       </h2>
-      All pieces can move to an empty square or attack an adjacent enemy piece during a turn. Apart from having different statistics, each piece has an extra power:<br />
+      All pieces can move to an empty square or attack an adjacent enemy piece during a turn. Apart from having
+      different statistics, each piece has an extra power:<br />
       <span>Lycanthropes</span> can move two squares, instead of one.<br />
-      <span>Vampires</span> can drain life from an adjacent 
+      <span>Vampires</span> can drain life from an adjacent
       piece, dealing less damage but healing themselves in exchange.<br />
-      <span>Necromancer</span> can summon a <span>Zombie</span> anywhere in the board, and can attack at two squares of distance, ignoring armor value.<br />
+      <span>Necromancer</span> can summon a <span>Zombie</span> anywhere in the board, and can attack at two squares of
+      distance, ignoring armor value.<br />
+      <h2>
+        Stats:
+      </h2>
+      <table id="stats">
+        <!--lyc and nec-->
+        <tr>
+          <td rowspan="3">
+            <ion-img src="../../assets/imgs/white_l.png"></ion-img>
+          </td>
+          <td>
+            <ion-img src="../../assets/imgs/hph.png"></ion-img>
+          </td>
+          <td>&nbsp;5</td>
+          <td rowspan="3">
+            <ion-img src="../../assets/imgs/white_n.png"></ion-img>
+          </td>
+          <td>
+            <ion-img src="../../assets/imgs/hph.png"></ion-img>
+          </td>
+          <td>&nbsp;3</td>
+        </tr>
+        <tr>
+          <td>
+            <ion-img src="../../assets/imgs/atk.png"></ion-img>
+          </td>
+          <td>&nbsp;5</td>
+          <td>
+            <ion-img src="../../assets/imgs/atk.png"></ion-img>
+          </td>
+          <td>&nbsp;4</td>
+        </tr>
+        <tr>
+          <td>
+            <ion-img src="../../assets/imgs/def.png"></ion-img>
+          </td>
+          <td>&nbsp;2</td>
+          <td>
+            <ion-img src="../../assets/imgs/def.png"></ion-img>
+          </td>
+          <td>&nbsp;1</td>
+        </tr>
+        <!--vamp and zombie-->
+        <tr>
+          <td rowspan="3">
+            <ion-img src="../../assets/imgs/white_v.png"></ion-img>
+          </td>
+          <td>
+            <ion-img src="../../assets/imgs/hph.png"></ion-img>
+          </td>
+          <td>&nbsp;4</td>
+          <td rowspan="3">
+            <ion-img src="../../assets/imgs/white_z.png"></ion-img>
+          </td>
+          <td>
+            <ion-img src="../../assets/imgs/hph.png"></ion-img>
+          </td>
+          <td>&nbsp;1</td>
+        </tr>
+        <tr>
+          <td>
+            <ion-img src="../../assets/imgs/atk.png"></ion-img>
+          </td>
+          <td>&nbsp;3</td>
+          <td>
+            <ion-img src="../../assets/imgs/atk.png"></ion-img>
+          </td>
+          <td>&nbsp;1</td>
+        </tr>
+        <tr>
+          <td>
+            <ion-img src="../../assets/imgs/def.png"></ion-img>
+          </td>
+          <td>&nbsp;5</td>
+          <td>
+            <ion-img src="../../assets/imgs/def.png"></ion-img>
+          </td>
+          <td>&nbsp;0</td>
+        </tr>
+      </table>
       <ion-button fill="clear" (click)="back()" class="btn">
         <ion-img src="../../assets/imgs/return.png"></ion-img>
       </ion-button>

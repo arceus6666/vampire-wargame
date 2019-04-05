@@ -38,7 +38,7 @@
 }
 
 .txt {
-  font-family: 'Times New Roman', Times, serif !important;
+  font-family: "Times New Roman", Times, serif !important;
   font-size: 35px;
   padding-top: 7%;
   padding-bottom: 7%;
@@ -46,11 +46,12 @@
   padding-right: 7%;
 }
 
-span{
-  font-size:40px;
+span {
+  font-size: 40px;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-size: 50px;
   padding: 2;
 }
@@ -65,3 +66,14 @@ h1, h2 {
 ion-content {
   background-color: transparent !important;
 }
+
+tr {
+  height: 40px;
+  padding-left: 5px;
+}
+
+td {
+  width: 40px;
+  margin-right: 10px;
+}
+

@@ -20,11 +20,11 @@
     <ion-button *ngIf="this.isApp" fill="clear" (click)="closeApp()" class="btn">
       <span class="txt">Exit</span>
     </ion-button>
-    <!--
-    <ion-button (click)="print()">
-      print board
-    </ion-button>
-    {{_plt.is('android')}}
-    -->
+    <div *ngIf="extras">
+      <ion-button (click)="print()">
+        print board
+      </ion-button>
+      {{_plt.is('android')}}
+    </div>
   </div>
 </ion-content>
